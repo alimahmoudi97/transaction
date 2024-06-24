@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="transactions">
+        <div class="transactions__header">
+          <h1>لیست تراکنش ها</h1>
+          <input
+            class="transactions__search-input"
+            type="text"
+            placeholder="جستجو تراکنش ..."
+          />
+        </div>
+        <div class="table-container">
+          <h2>تراکنش های شما</h2>
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th>ردیف</th>
+                <th>نوع تراکنش</th>
+                <th class="table__header--price">
+                  <span>مبلغ</span>
+                  <img src="../assets/icons/chevron.png" />
+                </th>
+                <th>شماره پیگیری</th>
+                <th class="table__header--date">
+                  <span>تاریخ تراکنش</span>
+                  <img src="../assets/icons/chevron.png" />
+                </th>
+              </tr>
+            </thead>
+            <tbody class="table__body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
