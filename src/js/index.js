@@ -67,92 +67,39 @@ function toLocalDate(t) {
   );
 }
 
-// sort functions
-
-async function sort({ by, order }) {
-  transactions = await fetch(
-    `http://localhost:3000/transactions?_sort=${by}&_order=${order}`
-  ).then((res) => res.json());
-  tableBody.innerHTML = transactions
-    .map(
-      (item, index) => `          
-                <tr class="table__row">
-                    <td class="order">${toPersianNumbers(index + 1)}</td>
-                    <td class=${
-                      item.type === "افزایش اعتبار"
-                        ? "transactions-type--settle"
-                        : "transactions-type--take"
-                    }>${item.type}</td>
-                    <td class="price">${toPersianNumbersWithComma(
-                      item.price
-                    )}</td>
-                    <td class="tracing-number">${toPersianNumbers(
-                      item.refId
-                    )}</td>
-                    <td class="date">${toLocalDate(item.date)}</td>
-                  </tr>
-            
-        `
-    )
-    .join("");
-}
-
-async function search(query) {
-  transactions = await fetch(
-    `http://localhost:3000/transactions?refId_like=${query}`
-  ).then((res) => res.json());
-  tableBody.innerHTML = transactions
-    .map(
-      (item, index) => `          
-                <tr class="table__row">
-                    <td class="order">${toPersianNumbers(index + 1)}</td>
-                    <td class=${
-                      item.type === "افزایش اعتبار"
-                        ? "transactions-type--settle"
-                        : "transactions-type--take"
-                    }>${item.type}</td>
-                    <td class="price">${toPersianNumbersWithComma(
-                      item.price
-                    )}</td>
-                    <td class="tracing-number">${toPersianNumbers(
-                      item.refId
-                    )}</td>
-                    <td class="date">${toLocalDate(item.date)}</td>
-                  </tr>
-            
-        `
-    )
-    .join("");
-}
-
 async function query({ by, order, search = "" }) {
   transactions = await fetch(
     `http://localhost:3000/transactions?${by !== "" ? `_sort=${by}` : ""}${
       order !== "" ? `&_order=${order}&` : ""
     }${search !== null ? `refId_like=${search}` : ""}`
   ).then((res) => res.json());
-  tableBody.innerHTML = transactions
-    .map(
-      (item, index) => `          
-                <tr class="table__row">
-                    <td class="order">${toPersianNumbers(index + 1)}</td>
-                    <td class=${
-                      item.type === "افزایش اعتبار"
-                        ? "transactions-type--settle"
-                        : "transactions-type--take"
-                    }>${item.type}</td>
-                    <td class="price">${toPersianNumbersWithComma(
-                      item.price
-                    )}</td>
-                    <td class="tracing-number">${toPersianNumbers(
-                      item.refId
-                    )}</td>
-                    <td class="date">${toLocalDate(item.date)}</td>
-                  </tr>
-            
-        `
-    )
-    .join("");
+  console.log(transactions);
+  if (transactions.length === 0) {
+    tableBody.innerHTML = `<p style="color:blue;text-align:center;font-size: 20px;">رکوردی برای نمایش وجود ندارد</p>`;
+  } else {
+    tableBody.innerHTML = transactions
+      .map(
+        (item, index) => `          
+                  <tr class="table__row">
+                      <td class="order">${toPersianNumbers(index + 1)}</td>
+                      <td class=${
+                        item.type === "افزایش اعتبار"
+                          ? "transactions-type--settle"
+                          : "transactions-type--take"
+                      }>${item.type}</td>
+                      <td class="price">${toPersianNumbersWithComma(
+                        item.price
+                      )}</td>
+                      <td class="tracing-number">${toPersianNumbers(
+                        item.refId
+                      )}</td>
+                      <td class="date">${toLocalDate(item.date)}</td>
+                    </tr>
+              
+          `
+      )
+      .join("");
+  }
 }
 
 tableHeaderPrice.addEventListener("click", () => {
